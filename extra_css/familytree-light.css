@@ -1,0 +1,40 @@
+.person {
+    stroke: #555;
+    stroke-width: 3px;
+}
+.person-m {
+    stroke: #add8e6;
+    stroke-width: 3px;
+}
+.person-f {
+    stroke: #ffc0cb;
+    stroke-width: 3px;
+}
+
+.extendable {
+    fill: #aaa;
+}
+
+.non-extendable {
+    fill: #fff;
+}
+
+.node-label {
+    font: 12px sans-serif;
+    fill: #000;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+
+.tooltip {
+    position: absolute;
+    font: 12px sans-serif;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}

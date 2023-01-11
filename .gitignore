@@ -1,2 +1,7 @@
-.vscode/
-data/data_large.js
+__pycache__/
+theme_override/assets/javascripts/d3.v7.min.js
+theme_override/assets/javascripts/cryptojs/
+site/
+gramps/*.json
+*.gpkg
+docs/imprint*

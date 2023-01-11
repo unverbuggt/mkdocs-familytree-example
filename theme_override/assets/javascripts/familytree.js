@@ -14,8 +14,8 @@ Array.prototype.remove = function() {
 };
 
 
-function d3_append_multiline_text(d3element, text, delimiter = "_", css_class = undefined, line_sep = 14,
-    line_offset = undefined, x = 13, dominant_baseline = "central") {
+function d3_append_multiline_text(d3element, text, delimiter = "_", css_class = undefined, x = 13,
+    line_sep = 14, line_offset = undefined, dominant_baseline = "central") {
     // adds a multi-line text label to a d3 element
     if (!text) return;
     const d3text = d3element.append("text")
@@ -71,6 +71,16 @@ class FTDataHandler {
             this.root = this.find_node_by_id(start_node_id);
             this.root.visible = true;
             this.dag.children = [this.root];
+            this.root.click();
+
+            if (Array.isArray(data.openup)) {
+                for (let i = 0; i < data.openup.length; i++) {
+                    this.find_node_by_id(data.openup[i]).click();
+                }
+            } else if (data.openup) {
+                this.find_node_by_id(data.openup).click();
+            }
+
 
         }
         // if no edges but only nodes are defined: root = dag
@@ -851,6 +861,7 @@ class FTDrawer {
                 this_object.node_label_func(node),
                 FTDrawer.label_delimiter,
                 "node-label",
+                this_object.node_size_func(node)+5,
             )
         });
 

@@ -32,6 +32,9 @@ gramps_import:
     string_birth: 'Geburt'
     string_death: 'Tod'
     string_birthname: 'Geburtsname'
+    #string_birth: 'Birth'
+    #string_death: 'Death'
+    #string_birthname: 'Birth Name'
     start: 'I0011'
     openup:
       - 'I0013'

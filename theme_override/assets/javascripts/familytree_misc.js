@@ -14,7 +14,7 @@ function lang_label(node) {
     } else if (node.data.deathplace) {
         label += ' (?)';
     } else if (node.get_birth_year()) {
-        label += ' (ca. ' + (new Date().getFullYear() - node.get_birth_year()).toString() + ')';
+        label += ' (~' + (new Date().getFullYear() - node.get_birth_year()).toString() + ')';
     }
 
     return label;

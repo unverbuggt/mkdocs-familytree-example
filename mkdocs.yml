@@ -1,5 +1,5 @@
-site_name: Stammbaum
-site_url: https://unverbuggt.rüthlein.de/mkdocs-familytree-example
+site_name: Interaktiver Stammbaum
+site_url: https://unverbuggt.rüthlein.de/familytree-example
 site_author: René Rüthlein
 
 theme:
@@ -23,6 +23,7 @@ extra_css:
 
 nav:
     - Stammbaum: 'index.md'
+    - Stammbaum: 'encrypted.md'
     - 'notes.md'
 
 gramps_import:
@@ -79,7 +80,7 @@ plugins:
 
     - encryptcontent:
         title_prefix: ''
-        global_password: '12345'
+        #global_password: '12345'
         summary: 'Verschlüsselte Seite.'
         placeholder: ''
         password_button_text: 'ENTER'

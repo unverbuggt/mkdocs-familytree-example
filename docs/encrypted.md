@@ -5,7 +5,7 @@ password: 12345
 <svg id="FT-main"></svg>
 </div>
 
-<script id="familytree-lang" src="assets/javascripts/familytree_de.js" defer></script>
+<script id="familytree-lang" src="../assets/javascripts/familytree_de.js" defer></script>
 <script id="familytree-data">
 {{ include_file('gramps/data.js') }}
 </script>

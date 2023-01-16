@@ -29,6 +29,8 @@ nav:
 gramps_import:
     filename_in: 'gramps/Untitled_1.json'
     filename_out: 'gramps/data.js'
+    base_media: 'C:\gramps'
+    thumb_media: 'theme_override/thumbs'
     string_birth: 'Geburt'
     string_death: 'Tod'
     string_birthname: 'Geburtsname'

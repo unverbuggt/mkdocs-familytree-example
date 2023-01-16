@@ -1,7 +1,10 @@
 function lang_tooltip(node) {
     if (node.is_union()) return;
-    let content;
-    content = '<span style="margin-left: 2.5px;"><b>' + node.data.longname;
+    let content = '';
+    if (node.data.thumb) {
+        content += '<table><tr><td><img src="'  + base_url + '/' + node.data.thumb + '"></td><td>';
+    }
+    content += '<span style="margin-left: 2.5px;"><b>' + node.data.longname;
     if (node.data.birthname) {
         if (node.data.sex == 'f') {
             content += ' née ' + node.data.birthname;
@@ -42,6 +45,8 @@ function lang_tooltip(node) {
         content += '<tr><td>age (approx.) ' + (new Date().getFullYear() - node.get_birth_year()).toString() + ' years</td></tr>';
     }
     content += '</table>';
-
+    if (node.data.thumb) {
+        content += '</td></tr></table>';
+    }
     return content;
 };

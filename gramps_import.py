@@ -3,9 +3,13 @@ import json
 import datetime
 from dateutil.relativedelta import relativedelta
 from pathlib import Path
+from PIL import Image
 
 filename_in = "Untitled_1.json"
 filename_out = "data.js"
+
+base_media = ""
+thumb_media = ""
 
 BIRTH = "Geburt"
 DEATH = "Tod"
@@ -19,13 +23,21 @@ events = {}
 persons = {}
 families = {}
 places = {}
+medias = {}
 
 def convert_json(config, **kwargs):
+    cur_dir = os.path.dirname(os.path.realpath(__file__))
+
     if 'gramps_import' in config:
         if 'filename_in' in config['gramps_import']:
             filename_in = config['gramps_import']['filename_in']
         if 'filename_out' in config['gramps_import']:
             filename_out = config['gramps_import']['filename_out']
+        if 'base_media' in config['gramps_import']:
+            base_media = config['gramps_import']['base_media']
+        if 'thumb_media' in config['gramps_import']:
+            thumb_media = config['gramps_import']['thumb_media']
+            Path(cur_dir + '/' + thumb_media).mkdir(parents=True, exist_ok=True)
         if 'string_birth' in config['gramps_import']:
             BIRTH = config['gramps_import']['string_birth']
         if 'string_death' in config['gramps_import']:
@@ -66,7 +78,7 @@ def convert_json(config, **kwargs):
                     events[handle]['type'] = EVENT_DEATH
                 else:
                     events[handle]['type'] = EVENT_NONE
-            if jl['_class'] == 'Person':
+            elif jl['_class'] == 'Person':
                 persons[handle] = {}
                 persons[handle]['id'] = jl['gramps_id']
                 found_birthname = BIRTHNAME == jl['primary_name']['type']['string']
@@ -110,7 +122,11 @@ def convert_json(config, **kwargs):
                 else:
                     persons[handle]['sex'] = '?';
 
-            if jl['_class'] == 'Family':
+                if jl['media_list']:
+                    if jl['media_list'][0]['_class'] == 'MediaRef':
+                        persons[handle]['media_handle'] = jl['media_list'][0]['ref']
+
+            elif jl['_class'] == 'Family':
                 families[handle] = {}
                 families[handle]['id'] = jl['gramps_id']
 
@@ -124,9 +140,14 @@ def convert_json(config, **kwargs):
                 for child in jl['child_ref_list']:
                     families[handle]['children'].append(child['ref'])
 
-            if jl['_class'] == 'Place':
+            elif jl['_class'] == 'Place':
                 places[handle] = {}
                 places[handle]['name'] = jl['name']['value']
+
+            elif jl['_class'] == 'Media':
+                medias[handle] = {}
+                medias[handle]['id'] = jl['gramps_id']
+                medias[handle]['filepath'] = Path(base_media + '/' + jl['path'])
 
     persons_out = {}
     for handle in persons:
@@ -177,6 +198,21 @@ def convert_json(config, **kwargs):
 
         persons_out[id]['sex'] = persons[handle]['sex']
 
+        if thumb_media and 'media_handle' in persons[handle]:
+            handle2 = persons[handle]['media_handle']
+            inpath = medias[handle2]['filepath']
+
+            thumb_dir, thumb_subdir = (thumb_media.split('/', 1) + [None])[:2]
+            out_img = medias[handle2]['id'] + '.jpg'
+            if thumb_subdir:
+                out_img = thumb_subdir + '/' + out_img
+            outpath = Path(cur_dir + '/' + thumb_dir + '/' + out_img)
+            persons_out[id]['thumb'] = out_img
+            if not outpath.is_file():
+                image = Image.open(inpath)
+                image.thumbnail((90,90))
+                image.save(outpath)
+
     unions_out = {}
     links_out = []
     for handle in families:
@@ -202,7 +238,6 @@ def convert_json(config, **kwargs):
             unions_out[id]['children'].append(persons[handle2]['id'])
             links_out.append([id,persons[handle2]['id']])
 
-    cur_dir = os.path.dirname(os.path.realpath(__file__))
     #print('data = '+json.dumps({'start':'I0036','openup':['I0000', 'I0033'], 'persons':persons_out, 'unions':unions_out, 'links':links_out}, indent=4))
     jsoncontent = {}
     jsoncontent['start'] = START

@@ -1,6 +1,7 @@
 __pycache__/
 theme_override/assets/javascripts/d3.v7.min.js
 theme_override/assets/javascripts/cryptojs/
+theme_override/thumbs
 site/
 gramps/*.json
 *.gpkg

@@ -106,6 +106,7 @@ def convert_json(config, **kwargs):
                 else:
                     persons[handle]['firstname'] = jl['primary_name']['first_name']
                 persons[handle]['givenname'] = jl['primary_name']['first_name']
+                persons[handle]['title'] = jl['primary_name']['title']
 
                 persons[handle]['events'] = []
                 for event in jl['event_ref_list']:
@@ -159,6 +160,8 @@ def convert_json(config, **kwargs):
 
         persons_out[id]['name'] = persons[handle]['firstname'] + ' ' + persons[handle]['surname']
         persons_out[id]['longname'] = persons[handle]['givenname'] + ' ' + persons[handle]['surname']
+        if persons[handle]['title']:
+            persons_out[id]['longname'] = persons[handle]['title'] + ' ' + persons_out[id]['longname']
 
         if 'birthname' in persons[handle]:
             persons_out[id]['name'] = persons_out[id]['name'] + ' (' + persons[handle]['birthname'] + ')'

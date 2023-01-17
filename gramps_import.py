@@ -160,12 +160,14 @@ def convert_json(config, **kwargs):
                 medias[handle]['filepath'] = Path(base_media + '/' + jl['path'])
 
     persons_out = {}
+    persons_temp = {}
     for handle in persons:
         id = persons[handle]['id']
-
         persons_out[id] = {}
-
         persons_out[id]['id'] = id
+
+        persons_temp[handle] = {}
+        persons_temp[handle]['id'] = id
 
         persons_out[id]['name'] = persons[handle]['firstname'] + ' ' + persons[handle]['surname']
         persons_out[id]['longname'] = persons[handle]['givenname'] + ' ' + persons[handle]['surname']
@@ -199,11 +201,19 @@ def convert_json(config, **kwargs):
                     persons_out[id]['deathplace'] = '?' #make sure deathplace is set, so missing deathyear won't make someone immortal
         if birthdate and deathdate:
             persons_out[id]['age'] = relativedelta(deathdate, birthdate).years
+
+        persons_temp[handle]['birthdate'] = birthdate
+        persons_temp[handle]['deathdate'] = deathdate
+
         persons_out[id]['own_unions'] = []
         for handle2 in families:
             #person is the child of a family
             if handle in families[handle2]['children']:
                 persons_out[id]['parent_union'] = families[handle2]['id']
+                if families[handle2]['father']:
+                    persons_temp[handle]['fhandle'] = families[handle2]['father']
+                if families[handle2]['mother']:
+                    persons_temp[handle]['mhandle'] = families[handle2]['mother']
 
             #person has own families
             if ((families[handle2]['father'] and handle in families[handle2]['father']) or
@@ -254,7 +264,22 @@ def convert_json(config, **kwargs):
             unions_out[id]['children'].append(persons[handle2]['id'])
             links_out.append([id,persons[handle2]['id']])
 
-    #print('data = '+json.dumps({'start':'I0036','openup':['I0000', 'I0033'], 'persons':persons_out, 'unions':unions_out, 'links':links_out}, indent=4))
+    for handle in persons_temp:
+        id = persons_temp[handle]['id']
+        birthdate = persons_temp[handle]['birthdate']
+        if 'fhandle' in persons_temp[handle]:
+            handle2 = persons_temp[handle]['fhandle']
+            if handle2 in persons_temp:
+                parent_birthdate = persons_temp[handle2]['birthdate']
+                if birthdate and parent_birthdate:
+                    persons_out[id]['fageab'] = relativedelta(birthdate, parent_birthdate).years
+        if 'mhandle' in persons_temp[handle]:
+            handle2 = persons_temp[handle]['mhandle']
+            if handle2 in persons_temp:
+                parent_birthdate = persons_temp[handle2]['birthdate']
+                if birthdate and parent_birthdate:
+                    persons_out[id]['mageab'] = relativedelta(birthdate, parent_birthdate).years
+
     jsoncontent = {}
     jsoncontent['start'] = START
     if OPENUP:

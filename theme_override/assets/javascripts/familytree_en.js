@@ -12,6 +12,7 @@ function lang_tooltip(node) {
             content += ' né ' + node.data.birthname;
         }
     }
+    content += '</b></span><br>';
     content += '<table style="margin-top: 2.5px;">';
     if (node.get_birth_year() || node.data.birthplace) {
         content += '<tr><td>born';
@@ -43,6 +44,12 @@ function lang_tooltip(node) {
         content += '<tr><td>age unknown</td></tr>';
     } else if (node.get_birth_year()) {
         content += '<tr><td>age (approx.) ' + (new Date().getFullYear() - node.get_birth_year()).toString() + ' years</td></tr>';
+    }
+    if (node.data.mageab) {
+        content += '<tr><td>mother\'s age at birth: ' + node.data.mageab + '</td></tr>';
+    }
+    if (node.data.fageab) {
+        content += '<tr><td>father\'s age at birth: ' + node.data.fageab + '</td></tr>';
     }
     content += '</table>';
     if (node.data.thumb) {

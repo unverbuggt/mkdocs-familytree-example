@@ -15,6 +15,7 @@ thumb_media = ""
 BIRTH = "Geburt"
 DEATH = "Tod"
 BIRTHNAME = "Geburtsname"
+JOB = "Beruf"
 
 EVENT_NONE = 0
 EVENT_BIRTH = 1
@@ -53,6 +54,8 @@ def convert_json(config, **kwargs):
             DEATH = config['gramps_import']['string_death']
         if 'string_birthname' in config['gramps_import']:
             BIRTHNAME = config['gramps_import']['string_birthname']
+        if 'string_job' in config['gramps_import']:
+            JOB = config['gramps_import']['string_job']
         if 'start' in config['gramps_import']:
             START = config['gramps_import']['start']
         else:
@@ -135,6 +138,15 @@ def convert_json(config, **kwargs):
                 if jl['media_list']:
                     if jl['media_list'][0]['_class'] == 'MediaRef':
                         persons[handle]['media_handle'] = jl['media_list'][0]['ref']
+
+                if jl['attribute_list']:
+                    for attr in jl['attribute_list']:
+                        if 'string' in attr['type']:
+                            if attr['type']['string'] == JOB:
+                                if 'job' in persons[handle]:
+                                    persons[handle]['job'] = persons[handle]['job'] + ', ' + attr['value']
+                                else:
+                                    persons[handle]['job'] = attr['value']
 
             elif jl['_class'] == 'Family':
                 families[handle] = {}
@@ -221,6 +233,9 @@ def convert_json(config, **kwargs):
                 persons_out[id]['own_unions'].append(families[handle2]['id'])
 
         persons_out[id]['sex'] = persons[handle]['sex']
+
+        if 'job' in persons[handle]:
+            persons_out[id]['job'] = persons[handle]['job']
 
         if thumb_media and 'media_handle' in persons[handle]:
             handle2 = persons[handle]['media_handle']

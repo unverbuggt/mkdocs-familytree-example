@@ -45,6 +45,9 @@ function lang_tooltip(node) {
     } else if (node.get_birth_year()) {
         content += '<tr><td>age (approx.) ' + (new Date().getFullYear() - node.get_birth_year()).toString() + ' years</td></tr>';
     }
+    if (node.data.job) {
+        content += '<tr><td>occupation: ' + node.data.job + '</td></tr>';
+    }
     if (node.data.mageab) {
         content += '<tr><td>mother\'s age at birth: ' + node.data.mageab + '</td></tr>';
     }

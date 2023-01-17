@@ -1,6 +1,7 @@
 import os
 import json 
 import datetime
+import hashlib
 from dateutil.relativedelta import relativedelta
 from pathlib import Path
 from PIL import Image
@@ -25,6 +26,13 @@ families = {}
 places = {}
 medias = {}
 
+def md5(fname):
+    hash_md5 = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
 def convert_json(config, **kwargs):
     cur_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -38,6 +46,7 @@ def convert_json(config, **kwargs):
         if 'thumb_media' in config['gramps_import']:
             thumb_media = config['gramps_import']['thumb_media']
             Path(cur_dir + '/' + thumb_media).mkdir(parents=True, exist_ok=True)
+            thumb_dir, thumb_subdir = (thumb_media.split('/', 1) + [None])[:2]
         if 'string_birth' in config['gramps_import']:
             BIRTH = config['gramps_import']['string_birth']
         if 'string_death' in config['gramps_import']:
@@ -204,17 +213,19 @@ def convert_json(config, **kwargs):
         if thumb_media and 'media_handle' in persons[handle]:
             handle2 = persons[handle]['media_handle']
             inpath = medias[handle2]['filepath']
-
-            thumb_dir, thumb_subdir = (thumb_media.split('/', 1) + [None])[:2]
-            out_img = medias[handle2]['id'] + '.jpg'
-            if thumb_subdir:
-                out_img = thumb_subdir + '/' + out_img
-            outpath = Path(cur_dir + '/' + thumb_dir + '/' + out_img)
-            persons_out[id]['thumb'] = out_img
-            if not outpath.is_file():
+            try:
                 image = Image.open(inpath)
+                image_hash = hashlib.md5(image.tobytes()).hexdigest()
                 image.thumbnail((90,90))
-                image.save(outpath)
+                out_img = medias[handle2]['id'] + '_' + image_hash +'.jpg'
+                if thumb_subdir:
+                    out_img = thumb_subdir + '/' + out_img
+                outpath = Path(cur_dir + '/' + thumb_dir + '/' + out_img)
+                if not outpath.is_file():
+                    image.save(outpath)
+                persons_out[id]['thumb'] = out_img
+            except:
+                print("Couldn't create thumb from image "+str(inpath))
 
     unions_out = {}
     links_out = []

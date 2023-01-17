@@ -201,9 +201,11 @@ def convert_json(config, **kwargs):
             persons_out[id]['age'] = relativedelta(deathdate, birthdate).years
         persons_out[id]['own_unions'] = []
         for handle2 in families:
+            #person is the child of a family
             if handle in families[handle2]['children']:
                 persons_out[id]['parent_union'] = families[handle2]['id']
 
+            #person has own families
             if ((families[handle2]['father'] and handle in families[handle2]['father']) or
                 (families[handle2]['mother'] and handle in families[handle2]['mother']) ):
                 persons_out[id]['own_unions'].append(families[handle2]['id'])

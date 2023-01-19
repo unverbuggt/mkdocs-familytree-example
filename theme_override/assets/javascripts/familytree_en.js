@@ -48,11 +48,15 @@ function lang_tooltip(node) {
     if (node.data.job) {
         content += '<tr><td>occupation: ' + node.data.job + '</td></tr>';
     }
-    if (node.data.mageab) {
-        content += '<tr><td>mother\'s age at birth: ' + node.data.mageab + '</td></tr>';
-    }
-    if (node.data.fageab) {
-        content += '<tr><td>father\'s age at birth: ' + node.data.fageab + '</td></tr>';
+    if (node.data.mageab | node.data.fageab) {
+        content += '<tr class="w3-tiny"><td>parent\'s age (birth):';
+        if (node.data.mageab) {
+            content += ' ' + node.data.mageab + '(M)';
+        }
+        if (node.data.fageab) {
+            content += ' ' + node.data.fageab + '(F)';
+        }
+        content += '</td></tr>';
     }
     content += '</table>';
     if (node.data.thumb) {

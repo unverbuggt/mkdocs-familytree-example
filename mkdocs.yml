@@ -54,8 +54,8 @@ plugins:
           on_pre_build: "gramps_import:convert_json"
           on_post_build: "download:get_external_assets"
 
-    - search:
-        lang: de
+    #- search:
+    #    lang: de
 
     - macros: {}
 

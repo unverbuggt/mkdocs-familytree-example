@@ -26,8 +26,10 @@ function lang_tooltip(node) {
             content += ' ' + node.get_death_year().toString();
         }
         if (node.data.deathplace) {
-            if (node.data.deathplace == "?" && !node.get_death_year()) {
-                content += ' (vermutlich)';
+            if (!node.get_death_year() && (node.data.deathplace == "?" || node.data.deathplace == "!")) {
+                if (node.data.deathplace == "?") {
+                    content += ' (vermutlich)';
+                }
             } else {
                 content += ' in ' + node.data.deathplace;
             }

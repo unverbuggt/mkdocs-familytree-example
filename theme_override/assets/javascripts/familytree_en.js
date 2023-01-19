@@ -30,8 +30,10 @@ function lang_tooltip(node) {
             content += ' ' + node.get_death_year().toString();
         }
         if (node.data.deathplace) {
-            if (node.data.deathplace == "?" && !node.get_death_year()) {
-                content += ' (presumably)';
+            if (!node.get_death_year() && (node.data.deathplace == "?" || node.data.deathplace == "!")) {
+                if (node.data.deathplace == "?") {
+                    content += ' (presumably)';
+                }
             } else {
                 content += ' in ' + node.data.deathplace;
             }

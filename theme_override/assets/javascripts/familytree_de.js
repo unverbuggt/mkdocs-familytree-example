@@ -46,16 +46,6 @@ function lang_tooltip(node) {
     if (node.data.job) {
         content += '<tr><td>Beruf: ' + node.data.job + '</td></tr>';
     }
-    if (node.data.mageab | node.data.fageab) {
-        content += '<tr class="w3-tiny"><td>Alter der Eltern (Geburt):';
-        if (node.data.mageab) {
-            content += ' ' + node.data.mageab + '(M)';
-        }
-        if (node.data.fageab) {
-            content += ' ' + node.data.fageab + '(V)';
-        }
-        content += '</td></tr>';
-    }
     content += '</table>';
     if (node.data.thumb) {
         content += '</td></tr></table>';

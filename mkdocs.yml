@@ -104,6 +104,8 @@ plugins:
           myNav: [div, id]
           myToc: [div, id]
           myTocButton: [div, id]
+          title-top: [span, id]
+          title-head: [span, id]
         search_index: 'dynamically' #dynamically
         password_button: True
         selfhost: true

@@ -42,7 +42,7 @@ function node_class(node) {
 function familytree_size() {
   let footer =  document.getElementsByTagName('footer')[0];
   let offsets_footer = footer.getBoundingClientRect();
-  let w3_main = document.getElementsByClassName('w3-main')[0].children[0]; 
+  let w3_main = document.getElementById('main-view').children[0]; 
   let offsets_w3_main = w3_main.getBoundingClientRect();
   let svg = document.getElementById('FT-main');
 
@@ -61,7 +61,7 @@ function familytree_init() {
   }
   let offsets_footer = footer.getBoundingClientRect();
 
-  let w3_main = document.getElementsByClassName('w3-main')[0].children[0]; 
+  let w3_main = document.getElementById('main-view').children[0]; 
   let offsets_w3_main = w3_main.getBoundingClientRect();
 
   //adjust height of main container

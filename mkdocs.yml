@@ -109,7 +109,8 @@ plugins:
         search_index: 'dynamically' #dynamically
         password_button: True
         selfhost: true
-        selfhost_download: false
+        selfhost_download: true
+        selfhost_dir: 'theme_override'
         reload_scripts:
           - '#familytree-data'
           - '#familytree-lang'

@@ -613,7 +613,9 @@ class FTDrawer {
         // initialize tooltips
         this._tooltip_div = d3.select("body").append("div")
             .attr("class", "tooltip")
-            .style("opacity", 0);
+            .style("opacity", 0)
+            .style("visibility", "hidden")
+            .style("transition", "all .2s");
         this.tooltip(FTDrawer.default_tooltip_func);
 
         // initialize dag layout maker
@@ -833,18 +835,16 @@ class FTDrawer {
                 tooltip_func = this._tooltip_func;
             nodeEnter
                 .on("mouseover", function (event, d) {
-                    tooltip_div.transition()
-                        .duration(200)
-                        .style("opacity", undefined);
+                    tooltip_div.style("opacity", undefined)
+                               .style("visibility", "visible");
                     tooltip_div.html(tooltip_func(d));
                     let height = tooltip_div.node().getBoundingClientRect().height;
                     tooltip_div.style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY-height/2) + "px");
                 })
-                .on("mouseout", function (d) {
-                    tooltip_div.transition()
-                        .duration(500)
-                        .style("opacity", 0);
+                .on("mouseout", function (event, d) {
+                    tooltip_div.style("opacity", 0)
+                               .style("visibility", "hidden");
                 });
         };
 

@@ -4,5 +4,4 @@ theme_override/assets/javascripts/cryptojs/
 theme_override/thumbs
 site/
 gramps/*.json
-*.gpkg
 docs/imprint*

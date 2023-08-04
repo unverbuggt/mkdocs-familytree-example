@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+         <loc>https://unverbuggt.github.io/mkdocs-familytree-example/</loc>
+         <lastmod>2023-08-04</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://unverbuggt.github.io/mkdocs-familytree-example/en/"/>
+         <xhtml:link rel="alternate" hreflang="de" href="https://unverbuggt.github.io/mkdocs-familytree-example/"/>
+         
+    </url>
+    <url>
+         <loc>https://unverbuggt.github.io/mkdocs-familytree-example/encrypted/</loc>
+         <lastmod>2023-08-04</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://unverbuggt.github.io/mkdocs-familytree-example/en/encrypted/"/>
+         <xhtml:link rel="alternate" hreflang="de" href="https://unverbuggt.github.io/mkdocs-familytree-example/encrypted/"/>
+         
+    </url>
+    <url>
+         <loc>https://unverbuggt.github.io/mkdocs-familytree-example/imprint/</loc>
+         <lastmod>2023-08-04</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://unverbuggt.github.io/mkdocs-familytree-example/en/imprint/"/>
+         <xhtml:link rel="alternate" hreflang="de" href="https://unverbuggt.github.io/mkdocs-familytree-example/imprint/"/>
+         
+    </url>
+    <url>
+         <loc>https://unverbuggt.github.io/mkdocs-familytree-example/notes/</loc>
+         <lastmod>2023-08-04</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://unverbuggt.github.io/mkdocs-familytree-example/en/notes/"/>
+         <xhtml:link rel="alternate" hreflang="de" href="https://unverbuggt.github.io/mkdocs-familytree-example/notes/"/>
+         
+    </url>
+</urlset>
